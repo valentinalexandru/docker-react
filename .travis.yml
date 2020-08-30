@@ -1,0 +1,17 @@
+# We need sudo permissions to exec the build
+
+sudo: required
+services:
+    - docker
+
+# Setup that occurs before deploying the project
+
+before_install:
+    - docker build -t valentintanase/docker-react -f Dockerfile.dev .
+
+# We use -- -- coverage args in our run command 
+# in order for react to exit with code 0 after
+# testing the app such that travis ci knows the test succeded
+
+script:
+    - docker run valentintanase/docker-react npm run test -- --coverage
