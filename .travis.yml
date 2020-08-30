@@ -14,4 +14,4 @@ before_install:
 # testing the app such that travis ci knows the test succeded
 
 script:
-    - docker run valentintanase/docker-react npm run test -- --coverage
+    - docker run -e CI=true valentintanase/docker-react npm run test
