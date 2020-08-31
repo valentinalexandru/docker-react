@@ -14,6 +14,10 @@ RUN npm run build
 
 FROM nginx
 
+# Map the container to port 80
+
+EXPOSE 80
+
 # Copy the /app/build folder from the build phase
 # to the nginx volume
 
