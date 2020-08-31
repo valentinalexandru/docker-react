@@ -1,6 +1,6 @@
 # Build phase config
 
-FROM node:13-alpine as builder 
+FROM node:alpine
 WORKDIR '/app'
 
 # Install dependencies
