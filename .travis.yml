@@ -1,6 +1,9 @@
 # We need sudo permissions to exec the build
 
 sudo: required
+
+language: node_js
+
 services:
     - docker
 
@@ -9,9 +12,22 @@ services:
 before_install:
     - docker build -t valentintanase/docker-react -f Dockerfile.dev .
 
-# We use -- -- coverage args in our run command 
-# in order for react to exit with code 0 after
+# We use -e CI=true arg in our run command 
+# in order for the program to exit with code 0 after
 # testing the app such that travis ci knows the test succeded
 
 script:
     - docker run -e CI=true valentintanase/docker-react npm run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "eu-central-1"
+    app: "docker-react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-eu-central-1-159399571077"
+    bucket_path: "docker-react"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: "$AWS_SECRET_KEY"
